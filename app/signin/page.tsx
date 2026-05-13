@@ -65,7 +65,7 @@ export default function SignInPage() {
           </div>
           <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-3">
             <div className="font-semibold text-slate-200">Socket Server</div>
-            <div className="mt-1">RTREQ, RTRSP, RTCNF flow</div>
+            <div className="mt-1">RTREQ, RTRSP, RTCNF, HBEAT flow</div>
           </div>
         </div>
       </section>

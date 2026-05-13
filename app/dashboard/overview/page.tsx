@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function TransactionsPage() {
+export default function DashboardOverviewPage() {
   redirect("/");
 }

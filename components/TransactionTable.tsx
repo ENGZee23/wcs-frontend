@@ -12,6 +12,7 @@ import TransactionModal from "./TransactionModal";
 
 type Props = {
   transactions: Transaction[];
+  theme?: "dark" | "light";
 };
 
 function getRouteStatus(status: number | null) {
@@ -69,7 +70,11 @@ function formatTime(value: string | null) {
   return new Date(value).toLocaleString();
 }
 
-export default function TransactionTable({ transactions }: Props) {
+export default function TransactionTable({
+  transactions,
+  theme = "dark",
+}: Props) {
+  const isDark = theme === "dark";
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionDetail | null>(null);
 
@@ -84,9 +89,21 @@ export default function TransactionTable({ transactions }: Props) {
 
   return (
     <>
-      <div className="h-full overflow-auto rounded-lg border border-slate-800 bg-slate-950 shadow-sm">
+      <div
+        className={`h-full overflow-auto rounded-lg border shadow-sm ${
+          isDark
+            ? "border-slate-800 bg-slate-950"
+            : "border-slate-200 bg-white"
+        }`}
+      >
         <table className="min-w-full text-sm">
-          <thead className="sticky top-0 z-10 border-b border-slate-800 bg-slate-900 text-xs uppercase text-slate-500 shadow">
+          <thead
+            className={`sticky top-0 z-10 border-b text-xs uppercase shadow ${
+              isDark
+                ? "border-slate-800 bg-slate-900 text-slate-500"
+                : "border-slate-200 bg-slate-50 text-slate-500"
+            }`}
+          >
             <tr>
               <th className="px-4 py-3 text-left">MsgID</th>
               <th className="px-4 py-3 text-left">PLC</th>
@@ -113,13 +130,29 @@ export default function TransactionTable({ transactions }: Props) {
                 <tr
                   key={tx.id}
                   onClick={() => openTransaction(tx.id)}
-                  className="cursor-pointer border-t border-slate-900 text-slate-300 hover:bg-slate-900"
+                  className={`cursor-pointer border-t ${
+                    isDark
+                      ? "border-slate-900 text-slate-300 hover:bg-slate-900"
+                      : "border-slate-100 text-slate-700 hover:bg-slate-50"
+                  }`}
                 >
-                  <td className="px-4 py-3 font-mono text-slate-200">{tx.msgID}</td>
+                  <td
+                    className={`px-4 py-3 font-mono ${
+                      isDark ? "text-slate-200" : "text-slate-900"
+                    }`}
+                  >
+                    {tx.msgID}
+                  </td>
                   <td className="px-4 py-3">{tx.plcID}</td>
                   <td className="px-4 py-3">{tx.sorterID}</td>
                   <td className="px-4 py-3">{tx.seq}</td>
-                  <td className="px-4 py-3 font-mono text-white">{tx.barcode}</td>
+                  <td
+                    className={`px-4 py-3 font-mono ${
+                      isDark ? "text-white" : "text-slate-950"
+                    }`}
+                  >
+                    {tx.barcode}
+                  </td>
                   <td className="px-4 py-3">{tx.dest1 ?? "-"}</td>
                   <td className="px-4 py-3">{tx.dest2 ?? "-"}</td>
                   <td className="px-4 py-3">{tx.dest3 ?? "-"}</td>
@@ -161,6 +194,7 @@ export default function TransactionTable({ transactions }: Props) {
       <TransactionModal
         transaction={selectedTransaction}
         onClose={() => setSelectedTransaction(null)}
+        theme={theme}
       />
     </>
   );

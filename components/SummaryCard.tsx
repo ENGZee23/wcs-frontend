@@ -2,13 +2,16 @@ type Props = {
   title: string;
   value: string | number;
   tone?: "blue" | "green" | "yellow" | "red" | "slate";
+  theme?: "dark" | "light";
 };
 
 export default function SummaryCard({
   title,
   value,
   tone = "slate",
+  theme = "dark",
 }: Props) {
+  const isDark = theme === "dark";
   const toneClasses = {
     blue: "border-blue-500/30 bg-blue-500/10 text-blue-300",
     green: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
@@ -18,7 +21,13 @@ export default function SummaryCard({
   };
 
   return (
-    <div className="min-h-[92px] rounded-lg border border-slate-800 bg-slate-900/90 px-4 py-3 shadow-sm">
+    <div
+      className={`min-h-[92px] rounded-lg border px-4 py-3 shadow-sm ${
+        isDark
+          ? "border-slate-800 bg-slate-900/90"
+          : "border-slate-200 bg-white"
+      }`}
+    >
       <div className="flex items-center justify-between gap-3">
         <div className="text-xs font-semibold uppercase text-slate-500">
           {title}
@@ -26,7 +35,11 @@ export default function SummaryCard({
         <div className={`h-2 w-2 rounded-full border ${toneClasses[tone]}`} />
       </div>
 
-      <div className="mt-3 truncate text-2xl font-semibold text-white">
+      <div
+        className={`mt-3 truncate text-2xl font-semibold ${
+          isDark ? "text-white" : "text-slate-950"
+        }`}
+      >
         {value}
       </div>
     </div>

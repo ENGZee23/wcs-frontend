@@ -1,5 +1,5 @@
 export type TransactionUpdatedEvent = {
-  messageType: "RTREQ" | "RTRSP" | "RTCNF";
+  messageType: "RTREQ" | "RTRSP" | "RTCNF" | "HBEAT";
   msgId: number;
   updatedAt: string;
 };

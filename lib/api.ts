@@ -3,6 +3,8 @@ import axios from "axios";
 import { Transaction } from "@/types/transaction";
 import { DashboardSummary } from "@/types/dashboard";
 import { TransactionDetail } from "@/types/transactionDetail";
+import { ScannerAreaSummary } from "@/types/scannerArea";
+import { ScannerStatus } from "@/types/scannerStatus";
 
 const api = axios.create({
   baseURL:
@@ -39,6 +41,36 @@ export async function getTransactionDetail(
 ): Promise<TransactionDetail> {
   const response = await api.get<TransactionDetail>(
     `/api/transactions/${id}`
+  );
+
+  return response.data;
+}
+
+export async function getScannerAreaSummary(
+  slug: string
+): Promise<ScannerAreaSummary> {
+  const response = await api.get<ScannerAreaSummary>(
+    `/api/scanner-areas/${slug}/summary`
+  );
+
+  return response.data;
+}
+
+export async function getScannerAreaTransactions(
+  slug: string
+): Promise<Transaction[]> {
+  const response = await api.get<Transaction[]>(
+    `/api/scanner-areas/${slug}/transactions`
+  );
+
+  return response.data;
+}
+
+export async function getScannerAreaScanners(
+  slug: string
+): Promise<ScannerStatus[]> {
+  const response = await api.get<ScannerStatus[]>(
+    `/api/scanner-areas/${slug}/scanners`
   );
 
   return response.data;
